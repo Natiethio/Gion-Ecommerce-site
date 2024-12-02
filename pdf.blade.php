@@ -56,7 +56,6 @@
             <p>Customer Email: {{$order->email}}</p>
             <p>Customer Address: {{$order->address}}</p>
             <p>Customer Phone: {{$order->phone}}</p>
-            <!-- <p>Customer Id: {{$order->user_id}}</p> -->
         </div>
     </div>
 

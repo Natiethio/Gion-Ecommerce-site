@@ -1,115 +1,139 @@
+<!DOCTYPE html>
+<html>
+
 <head>
-  <style>
-  
-  </style>
-     <base href="/public">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   <style>
+      .nav-link a:hover {
+         color: orange;
+      }
+      .nav-its .nav-lks .item-count {
+         position: relative;
+         display: inline-block;
+         background-color: #f7444e;
+         color: #fff;
+         border-radius: 50%;
+         width: 20px;
+         height: 20px;
+         text-align: center;
+         line-height: 20px;
+         font-size: 20px;
+         margin-left: 1px;
+         vertical-align: top;
+        
+      }
+      .nav-its .nav-lks .item-count sup {
+         position: relative;
+         font-size: 15px;
+         top: -0.1em;
+         /* Adjust the vertical position as needed */
+      }
+   </style>
 </head>
-<div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_navbar.html -->
-        <nav class="navbar p-0 fixed-top d-flex flex-row">
-          <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo-mini" href="/redirect"></a>
-          </div>
-          <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-              <span class="mdi mdi-menu"></span>
-            </button>
-            <ul class="navbar-nav navbar-nav-right">
-              <li class="nav-item dropdown d-none d-lg-block">
-              </li>
-              
-              <li class="nav-item dropdown border-left">
-                <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="mdi mdi-email"></i>
-                  <span class="count bg-success"></span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
-                  <h6 class="p-3 mb-0">Messages</h6>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <img src="assets/images/faces/fac.jpg" alt="image" class="rounded-circle profile-pic">
-                    </div>
-                   
+<header class="header_section">
+   <?php
+      use App\Models\Cart;
+      use App\Models\Wishlist;
+   ?>
+   @auth
+   <?php
+    $cartItemCount = Cart::where('user_id', auth()->user()->id)->count();
+    $wishItemCount = Wishlist::where('user_id', auth()->user()->id)->count();
+   ?>
+   @endauth
+
+   <div class="container">
+      <nav class="navbar navbar-expand-lg custom_nav-container fixed-top bg-white p-3 shadow">
+         <a class="navbar-brand" href="/"><img width="250" src="{{asset('images/logocart.png')}}" alt="#" /></a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+
+               @if(Route::has('login'))
+               @auth
+
+               <li class="nav-item ">
+                  <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
+               </li>
+
+               <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="productsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     Products
                   </a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <img src="admin/assets/images/faces/face2.jpg" alt="image" class="rounded-circle profile-pic">
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1">Cregh send you a message</p>
-                      <p class="text-muted mb-0"> 15 Minutes ago </p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <img src="admin/assets/images/faces/face3.jpg" alt="image" class="rounded-circle profile-pic">
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1">Profile picture updated</p>
-                      <p class="text-muted mb-0"> 18 Minutes ago </p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <p class="p-3 mb-0 text-center">4 new messages</p>
-                </div>
-              </li>
-              <li class="nav-item dropdown border-left">
-                <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
-                  <i class="mdi mdi-bell"></i>
-                  <span class="count bg-danger"></span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                  <h6 class="p-3 mb-0">Notifications</h6>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-calendar text-success"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject mb-1">Event today</p>
-                      <p class="text-muted ellipsis mb-0"> Just a reminder that you have an event today </p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-settings text-danger"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject mb-1">Settings</p>
-                      <p class="text-muted ellipsis mb-0"> Update dashboard </p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-link-variant text-warning"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject mb-1">Launch Admin</p>
-                      <p class="text-muted ellipsis mb-0"> New admin wow! </p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <p class="p-3 mb-0 text-center">See all notifications</p>
-                </div>
-              </li>
-            <li class="ml-5">
-                <x-app-layout>
-                    
-                </x-app-layout>
-            </li>
-            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-              <span class="mdi mdi-format-line-spacing"></span>
-            </button>
-          </div>
-        </nav>
+                  <div class="dropdown-menu" aria-labelledby="productsDropdown">
+                     <a class="dropdown-item" href="{{ url('full_product') }}">Store Products</a>
+                     <a class="dropdown-item" href="{{ url('seller_items') }}">Seller Items</a>
+                  </div>
+               </li>
+
+               <li class="nav-item">
+                  <a class="nav-link" href="{{url('show_order')}}">Order</i></a>
+               </li>
+
+               <!-- <li class="nav-item">
+                  <a class="nav-link fs-5" href="{{url('show_cart')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>(<span style="color:#f7444e"><?php echo $cartItemCount; ?></span>)</a>
+               </li>
+
+               <li class="nav-item">
+                  <a class="nav-link fs-5" href="{{url('show_wishlist')}}"><i class="fa fa-heart" aria-hidden="true"></i>(<span style="color:#f7444e"><?php echo $wishItemCount; ?></span>)</a> 
+               </li> -->
+
+               <li class="nav-item nav-its">
+                  <a class="nav-link nav-lks fs-5" href="{{url('show_cart')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span class="item-count" style="background-color:#f7444e"><sup><?php echo $cartItemCount; ?></sup></span></a>
+               </li>
+
+               <li class="nav-item nav-its">
+                  <a class="nav-link nav-lks fs-5" href="{{url('show_wishlist')}}"><i class="fa fa-heart" aria-hidden="true"></i><span class="item-count" style="background-color:#f7444e"><sup><?php echo $wishItemCount; ?></sup></span></a>
+               </li>
+
+               <li class="nav-item">
+                  <a class="nav-link" href="{{url('sell')}}">Sell</a>
+                  <!-- <a class="nav-link" href="#" data-toggle="modal" data-target="#sellModal">Sell</a> -->
+               </li>
+
+               <li class="nav-item">
+                  <x-app-layout>
+
+                  </x-app-layout>
+               </li>
+               @else
+
+               <li class="nav-item ">
+                  <a class="nav-link" href="/">Home<span class="sr-only"></span></a>
+               </li>
+
+               <li class="nav-item">
+                  <a class="nav-link" href="{{url('full_product')}}">Products</a>
+               </li>
+
+               <li class="nav-item">
+                  <a class="nav-link" href="{{url('about')}}">About</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="{{url('contact')}}">Contact</a>
+               </li>
+
+
+               <li class="nav-item mb-1">
+                  <a class="btn btn-danger" style="width:85px" href="{{route('login')}}" id="logincss">Login</a>
+               </li>
+
+               <li class="nav-item">
+                  <a class="btn btn-primary" href="{{route('register')}}">Register</a>
+               </li>
+
+
+
+               @endauth
+               @endif
+               <!-- <i class="fa fa-search" aria-hidden="true" style="margin-right:10px;margin-top:10px;margin-left:70px;"></i> -->
+            </ul>
+         </div>
+      </nav>
+   </div>
+</header>
+
+</html>
